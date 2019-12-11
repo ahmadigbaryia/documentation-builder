@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Documentation</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Vendor styles  -->
+        <link rel="stylesheet" href="vendors/animate.css/animate.min.css">
+        <link rel="stylesheet" href="vendors/jquery-scrollbar/jquery.scrollbar.css">
+        <link rel="stylesheet" href="vendors/material-design-iconic-font/css/material-design-iconic-font.min.css">
+        
+        <!-- App styles -->
+        <link rel="stylesheet" href="css/prism.css">
+        <link rel="stylesheet" href="css/docs.app.min.css">
+    </head>
+
+    <body data-ma-theme="green">
+        <main class="main">
+            <div class="page-loader">
+                <div class="page-loader__spinner">
+                    <svg viewbox="25 25 50 50">
+                        <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+                    </svg>
+                </div>
+            </div>
+
+            <header class="header">
+                <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+                    <div class="navigation-trigger__inner">
+                        <i class="navigation-trigger__line"></i>
+                        <i class="navigation-trigger__line"></i>
+                        <i class="navigation-trigger__line"></i>
+                    </div>
+                </div>
+
+                <div class="header__logo hidden-sm-down">
+                    <h1><a id="main_header_link" href="index.html"></a></h1>
+                </div>
+            </header>
+            
+            <!-- Main Menu -->
+            <aside class="sidebar">
+                <div class="scrollbar-inner">
+                    <ul class="navigation">
+                        <!-- add "navigation__sub--active" class name to the active <li> element-->
+                        <li id="getting_started" class="navigation__sub navigation__sub--toggled">
+                            <a href="index.html"><i class="zmdi zmdi-home"></i> Getting Started</a>
+                            <ul id="getting_started_menu" style="display: block;">
+                                <!-- add "navigation__active" class name to the active <li> element-->
+                                <!-- <li id="introduction"><a href="index.html">Introduction</a></li> -->
+                            </ul>
+                        </li>
+                        <li id="components" class="navigation__sub navigation__sub--toggled">
+                            <a href=""><i class="zmdi zmdi-widgets"></i>Components</a>
+                            <ul id="components_menu" style="display: block;">
+                                <!-- <li id="button"><a href="button.html">Button</a></li> -->
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+            <section class="content">
+                <header class="content__title">
+                    <h1 id="content_title"></h1>
+                    <small id="content_subtitle"></small>
+                </header>
+                <div id="cards_container"></div>
+                <footer class="footer hidden-xs-down">
+                    <p>© Kotchi UI. All rights reserved.</p>
+                    <ul class="nav footer__nav">
+                        <a class="nav-link" href="">Github Page</a>
+                        <a class="nav-link" href="">Issues</a>
+                        <a class="nav-link" href="">Release Notes</a>
+                        <a class="nav-link" href="">Contacts</a>
+                    </ul>
+                </footer>
+            </section>
+        </main>
+
+        <!-- Older IE warning message -->
+            <!--[if IE]>
+                <div class="ie-warning">
+                    <h1>Warning!!</h1>
+                    <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web browsers to access this website.</p>
+
+                    <div class="ie-warning__downloads">
+                        <a href="http://www.google.com/chrome">
+                            <img src="img/browsers/chrome.png" alt="">
+                        </a>
+
+                        <a href="https://www.mozilla.org/en-US/firefox/new">
+                            <img src="img/browsers/firefox.png" alt="">
+                        </a>
+
+                        <a href="http://www.opera.com">
+                            <img src="img/browsers/opera.png" alt="">
+                        </a>
+
+                        <a href="https://support.apple.com/downloads/safari">
+                            <img src="img/browsers/safari.png" alt="">
+                        </a>
+
+                        <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
+                            <img src="img/browsers/edge.png" alt="">
+                        </a>
+
+                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                            <img src="img/browsers/ie.png" alt="">
+                        </a>
+                    </div>
+                    <p>Sorry for the inconvenience!</p>
+                </div>
+            <![endif]-->
+
+        <!-- Javascript -->
+        <!-- Vendors -->
+        <script src="vendors/jquery/jquery.min.js"></script>
+        <script src="vendors/popper.js/popper.min.js"></script>
+        <script src="vendors/bootstrap/js/bootstrap.min.js"></script>
+        <script src="vendors/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+        <script src="vendors/jquery-scrollLock/jquery-scrollLock.min.js"></script>
+
+        <!-- App functions and actions -->
+        <script src="js/docs.app.min.js"></script>
+        <script src="js/prism.js"></script>
+        <!-- Add your project code script here -->
+        <script id="project_entrypoint" src="js/app.min.js"></script>
+        
+    </body>
+</html>
