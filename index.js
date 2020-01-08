@@ -26,7 +26,7 @@ module.exports = () => {
 	//{String} destDocsPath - The destination folder path for the documentation website
 	const destDocsPath = args["destDocsPath"] || "docs";
 	//{String} scriptPath - The project's main script path
-	const scriptPath = args["scriptPath"] || "dest/app.min.js";
+	const scriptPath = args["scriptPath"] || "dist/app.min.js";
 	//{String} srcPath - The project's source path
 	const srcPath = args["srcPath"] || "src";
 	//{String} projectName - The project's name
@@ -132,30 +132,17 @@ module.exports = () => {
 	}
 
 	async function publishPage({ id, pageDOM }) {
-		await fs.writeFile(
-			`${destDocsPath}${path.sep}${id}.html`,
-			pageDOM.serialize(),
-			"utf8"
-		);
+		await fs.writeFile(`${destDocsPath}${path.sep}${id}.html`, pageDOM.serialize(), "utf8");
 	}
 
-	function generatePageBaseData({
-		category,
-		title,
-		subtitle,
-		pageDocument,
-		docsConfigurations,
-		index
-	}) {
+	function generatePageBaseData({ category, title, subtitle, pageDocument, docsConfigurations, index }) {
 		const activeNavClass = " navigation__sub--active";
 		pageDocument.title = `${projectName} - ${title}`;
 		pageDocument.querySelector("a#main_header_link").innerHTML = `${projectName} Documentation`;
 		docsConfigurations.forEach((docsConfig, idx) => {
 			const { id, title, category } = docsConfig;
 			const menuItemElement = new JSDOM(
-				`<li id="${id}" class="${
-					index === idx ? activeNavClass : ""
-				}"><a href="${id}.html">${title}</a></li>`
+				`<li id="${id}" class="${index === idx ? activeNavClass : ""}"><a href="${id}.html">${title}</a></li>`
 			).window.document.body.firstChild;
 			pageDocument.querySelector(`ul#${category}_menu`).appendChild(menuItemElement);
 		});
@@ -177,25 +164,51 @@ module.exports = () => {
 		const contentsHTML = await fs.readFile(`${docsPath}${path.sep}${card.contents}`);
 		const cardTemplateDOM = new JSDOM(cardTemplateHTML).window.document.body;
 		const contentsDOM = new JSDOM(contentsHTML).window.document;
-		const previewDOM = cardTemplateDOM.querySelector("div#preview");
-		const markupDOM = cardTemplateDOM.querySelector("div#markup");
-
+		const previewContainer = cardTemplateDOM.querySelector("div#preview");
+		const markupContainer = cardTemplateDOM.querySelector("div#markup");
+		const additionalInfoContainer = cardTemplateDOM.querySelector("div#additional_info");
+		const previewContents = contentsDOM.getElementById("preview");
+		const markupContents = contentsDOM.getElementById("markup");
+		const additionalInfoContents = contentsDOM.getElementById("additional_info");
 		cardTemplateDOM.querySelector("h4.card-title").innerHTML = card.title;
 		cardTemplateDOM.querySelector("h6.card-subtitle").innerHTML = card.subtitle;
-		cardTemplateDOM
-			.querySelector("a[href='#preview'")
-			.setAttribute("id", `preview_${index}-tab`);
-		cardTemplateDOM.querySelector("a[href='#preview'").setAttribute("href", `preview_${index}`);
-		cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("id", `markup_${index}-tab`);
-		cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("href", `markup_${index}`);
-		previewDOM.setAttribute("id", `preview_${index}`);
-		previewDOM.setAttribute("aria-labelledby", `preview_${index}-tab`);
-		previewDOM.innerHTML = contentsDOM.getElementById("preview").innerHTML;
-		markupDOM.setAttribute("id", `markup_${index}`);
-		markupDOM.setAttribute("aria-labelledby", `markup_${index}-tab`);
-		markupDOM.children[0].children[0].innerHTML = escape(
-			contentsDOM.getElementById("markup").innerHTML
-		);
+		setPreviewAndMarkupContents({
+			index,
+			cardTemplateDOM,
+			previewContainer,
+			markupContainer,
+			previewContents,
+			markupContents
+		});
+		setAdditionalInfoContents({ additionalInfoContainer, additionalInfoContents });
 		return cardTemplateDOM;
+	}
+	function setPreviewAndMarkupContents({
+		index,
+		cardTemplateDOM,
+		previewContainer,
+		markupContainer,
+		previewContents,
+		markupContents
+	}) {
+		if (previewContents && markupContents) {
+			cardTemplateDOM.querySelector("a[href='#preview'").setAttribute("id", `preview_${index}-tab`);
+			cardTemplateDOM.querySelector("a[href='#preview'").setAttribute("href", `preview_${index}`);
+			cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("id", `markup_${index}-tab`);
+			cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("href", `markup_${index}`);
+			previewContainer.setAttribute("id", `preview_${index}`);
+			previewContainer.setAttribute("aria-labelledby", `preview_${index}-tab`);
+			previewContainer.innerHTML = previewContents.innerHTML;
+			markupContainer.setAttribute("id", `markup_${index}`);
+			markupContainer.setAttribute("aria-labelledby", `markup_${index}-tab`);
+			markupContainer.children[0].children[0].innerHTML = escape(markupContents.innerHTML);
+		} else {
+			cardTemplateDOM.querySelector("div.tab-container").style.display = "none";
+		}
+	}
+	function setAdditionalInfoContents({ additionalInfoContainer, additionalInfoContents }) {
+		if (additionalInfoContents) {
+			additionalInfoContainer.innerHTML = additionalInfoContents.innerHTML;
+		}
 	}
 };
