@@ -135,19 +135,19 @@ module.exports = () => {
 		await fs.writeFile(`${destDocsPath}${path.sep}${id}.html`, pageDOM.serialize(), "utf8");
 	}
 
-	function generatePageBaseData({ category, title, subtitle, pageDocument, docsConfigurations, index }) {
+	function generatePageBaseData({ category, title, tagName, subtitle, pageDocument, docsConfigurations, index }) {
 		const activeNavClass = " navigation__sub--active";
-		pageDocument.title = `${projectName} - ${title}`;
+		pageDocument.title = `${projectName} - ${title} <${tagName}>`;
 		pageDocument.querySelector("a#main_header_link").innerHTML = `${projectName} Documentation`;
 		docsConfigurations.forEach((docsConfig, idx) => {
-			const { id, title, category } = docsConfig;
+			const { id, title, tagName, category } = docsConfig;
 			const menuItemElement = new JSDOM(
-				`<li id="${id}" class="${index === idx ? activeNavClass : ""}"><a href="${id}.html">${title}</a></li>`
+				`<li id="${id}" class="${index === idx ? activeNavClass : ""}"><a href="${id}.html">${title} <code class="info-tag-name">&lt;${tagName}&gt;</code></a></li>`
 			).window.document.body.firstChild;
 			pageDocument.querySelector(`ul#${category}_menu`).appendChild(menuItemElement);
 		});
 		pageDocument.querySelector(`li#${category}`).className += activeNavClass;
-		pageDocument.querySelector("h1#content_title").innerHTML = title;
+		pageDocument.querySelector("h1#content_title").innerHTML = `${title} <code class="info-tag-name">&lt;${tagName}&gt;</code>`;
 		pageDocument.querySelector("small#content_subtitle").innerHTML = subtitle;
 	}
 
