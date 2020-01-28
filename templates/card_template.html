@@ -4,44 +4,19 @@
         <h4 class="card-title"></h4>
         <h6 class="card-subtitle"></h6>
         <div id="additional_info"></div>
-        <div class="tab-container">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item nav-link">
-                    <a
-                        id="preview-tab"
-                        class="nav-item nav-link active"
-                        data-toggle="tab"
-                        href="#preview"
-                        role="tab"
-                        aria-controls="preview"
-                        aria-selected="true"
-                        >Preview
-                    </a>
-                </li>
-                <li class="nav-item nav-link">
-                    <a
-                        id="markup-tab"
-                        class="nav-item nav-link"
-                        data-toggle="tab"
-                        href="#markup"
-                        role="tab"
-                        aria-controls="markup"
-                        aria-selected="false"
-                        >Markup
-                    </a>
-                </li>
-            </ul>
-
-            <div class="tab-content">
-                <div
-                    class="tab-pane fade show active"
-                    id="preview"
-                    role="tabpanel"
-                ></div>
-                <div class="tab-pane fade" id="markup" role="tabpanel">
+        <div class="example-container">
+            <div class="example-preview"></div>
+            <div class="example-markup-container">
+                <div class="example-markup">
                     <pre class="language-html">
-						<code class="language-html"></code>
-					</pre>
+                        <code class="language-html"></code>
+                    </pre>
+                </div>
+                <div class="example-markup-actions">
+                <!--
+                    <button class="markup-copy-action">Copy</button>
+                    <button class="markup-view-action">View in Codepen</button>
+                -->
                 </div>
             </div>
         </div>

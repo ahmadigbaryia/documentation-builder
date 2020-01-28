@@ -154,26 +154,26 @@ module.exports = () => {
 	async function generatePageCards({ cards, docsPath, pageDocument }) {
 		const cardsContainerDOM = pageDocument.querySelector("div#cards_container");
 		for (let index = 0; index < cards.length; index++) {
-			const cardDOM = await generatePageCard({ card: cards[index], index, docsPath });
+			const cardDOM = await generatePageCard({ card: cards[index], docsPath });
 			cardsContainerDOM.appendChild(cardDOM);
 		}
 	}
 
-	async function generatePageCard({ card, index, docsPath }) {
+	async function generatePageCard({ card, docsPath }) {
 		const cardTemplateHTML = await fs.readFile(`${docsTemplatesPath}/card_template.html`);
 		const contentsHTML = await fs.readFile(`${docsPath}${path.sep}${card.contents}`);
 		const cardTemplateDOM = new JSDOM(cardTemplateHTML).window.document.body;
 		const contentsDOM = new JSDOM(contentsHTML).window.document;
-		const previewContainer = cardTemplateDOM.querySelector("div#preview");
-		const markupContainer = cardTemplateDOM.querySelector("div#markup");
+		const previewContainer = cardTemplateDOM.querySelector("div.example-preview");
+		const markupContainer = cardTemplateDOM.querySelector("div.example-markup");
 		const additionalInfoContainer = cardTemplateDOM.querySelector("div#additional_info");
+
 		const previewContents = contentsDOM.getElementById("preview");
 		const markupContents = contentsDOM.getElementById("markup");
 		const additionalInfoContents = contentsDOM.getElementById("additional_info");
 		cardTemplateDOM.querySelector("h4.card-title").innerHTML = card.title;
 		cardTemplateDOM.querySelector("h6.card-subtitle").innerHTML = card.subtitle;
 		setPreviewAndMarkupContents({
-			index,
 			cardTemplateDOM,
 			previewContainer,
 			markupContainer,
@@ -184,7 +184,6 @@ module.exports = () => {
 		return cardTemplateDOM;
 	}
 	function setPreviewAndMarkupContents({
-		index,
 		cardTemplateDOM,
 		previewContainer,
 		markupContainer,
@@ -192,18 +191,10 @@ module.exports = () => {
 		markupContents
 	}) {
 		if (previewContents && markupContents) {
-			cardTemplateDOM.querySelector("a[href='#preview'").setAttribute("id", `preview_${index}-tab`);
-			cardTemplateDOM.querySelector("a[href='#preview'").setAttribute("href", `preview_${index}`);
-			cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("id", `markup_${index}-tab`);
-			cardTemplateDOM.querySelector("a[href='#markup'").setAttribute("href", `markup_${index}`);
-			previewContainer.setAttribute("id", `preview_${index}`);
-			previewContainer.setAttribute("aria-labelledby", `preview_${index}-tab`);
 			previewContainer.innerHTML = previewContents.innerHTML;
-			markupContainer.setAttribute("id", `markup_${index}`);
-			markupContainer.setAttribute("aria-labelledby", `markup_${index}-tab`);
 			markupContainer.children[0].children[0].innerHTML = escape(markupContents.innerHTML);
 		} else {
-			cardTemplateDOM.querySelector("div.tab-container").style.display = "none";
+			cardTemplateDOM.querySelector("div.example-container").style.display = "none";
 		}
 	}
 	function setAdditionalInfoContents({ additionalInfoContainer, additionalInfoContents }) {

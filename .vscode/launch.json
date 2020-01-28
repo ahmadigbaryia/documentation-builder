@@ -13,7 +13,10 @@
             ],
             "program": "${workspaceFolder}\\bin\\docs-builder.js",
             "args": [
-                "--projectName", "Kotchi UI"
+                "--projectName", "Kotchi UI",
+                "--srcPath", "C:\\Projects\\KotchiUI\\src",
+                "--scriptPath", "C:\\Projects\\KotchiUI\\dist\\kotchi-ui.js",
+                "--destDocsPath", "C:\\Projects\\KotchiUI\\docs"
              ]
         }
     ]
