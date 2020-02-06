@@ -169,16 +169,15 @@ module.exports = () => {
 		const additionalInfoContainer = cardTemplateDOM.querySelector("div#additional_info");
 
 		const previewContents = contentsDOM.getElementById("preview");
-		const markupContents = contentsDOM.getElementById("markup");
 		const additionalInfoContents = contentsDOM.getElementById("additional_info");
+		cardTemplateDOM.querySelector("div.card").setAttribute("id", card.id);
 		cardTemplateDOM.querySelector("h4.card-title").innerHTML = card.title;
 		cardTemplateDOM.querySelector("h6.card-subtitle").innerHTML = card.subtitle;
 		setPreviewAndMarkupContents({
 			cardTemplateDOM,
 			previewContainer,
 			markupContainer,
-			previewContents,
-			markupContents
+			previewContents
 		});
 		setAdditionalInfoContents({ additionalInfoContainer, additionalInfoContents });
 		return cardTemplateDOM;
@@ -187,12 +186,11 @@ module.exports = () => {
 		cardTemplateDOM,
 		previewContainer,
 		markupContainer,
-		previewContents,
-		markupContents
+		previewContents
 	}) {
-		if (previewContents && markupContents) {
+		if (previewContents) {
 			previewContainer.innerHTML = previewContents.innerHTML;
-			markupContainer.children[0].children[0].innerHTML = escape(markupContents.innerHTML);
+			markupContainer.children[0].children[0].innerHTML = escape(previewContents.innerHTML);
 		} else {
 			cardTemplateDOM.querySelector("div.example-container").style.display = "none";
 		}
